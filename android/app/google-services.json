@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "32871131800",
+    "project_id": "aniguess-project",
+    "storage_bucket": "aniguess-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32871131800:android:aa190bc7c06e7956e57eed",
+        "android_client_info": {
+          "package_name": "com.example.anime_quiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVxzLk6XTD0ZftnsLIJVJjVm6UYMv-FUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
