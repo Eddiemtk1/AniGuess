@@ -1,5 +1,4 @@
 import 'package:anime_quiz/widgets/my_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.all(15),
           child: Column(
             children: [
-              const SizedBox(height: 50,),
+              const SizedBox(height: 50),
               Image.asset("assets/images/Login-icon.png"),
               const SizedBox(height: 20),
               //Input field for email
@@ -38,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: passwordController,
                 decoration: InputDecoration(
-                  labelText: "PASSWORD",
+                  labelText: "Password",
                   border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                     onPressed: () {},
@@ -55,10 +54,23 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20),
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
+                  const Text(
                     "Don't have an account?",
                     style: TextStyle(fontSize: 18),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      "Signup here",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                        letterSpacing: -1,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -69,3 +81,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
