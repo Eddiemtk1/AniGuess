@@ -22,6 +22,7 @@ class AuthenticateService {
         await _firestore.collection("userData").doc(credential.user!.uid).set({
           "name": name,
           "uid": credential.user!.uid,
+          "email":email,
           "score": 0,
         });
         res = "success";
