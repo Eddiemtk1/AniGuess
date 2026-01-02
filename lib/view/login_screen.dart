@@ -1,4 +1,7 @@
+import 'package:anime_quiz/Services/authenticate_service.dart';
+import 'package:anime_quiz/view/nav_bar_category.dart';
 import 'package:anime_quiz/widgets/my_button.dart';
+import 'package:anime_quiz/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:anime_quiz/view/signup_screen.dart';
 
@@ -12,7 +15,38 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
   bool isPasswordHidden = true;
+  final AuthenticateService _authService = AuthenticateService();
+
+  //login function to handle user reg
+  void _login() async {
+    setState(() {
+      isLoading = true;
+    });
+    //CALL THE METHOD
+    final result = await _authService.loginUser(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+
+    if (!mounted)
+      return; //If the screen is open, continue. If it's closed, stop.
+    if (result == "success") {
+      setState(() {
+        isLoading = false;
+      });
+      //NAVIIGATE TO THE NEXT SCREEN WITH MESSSAGE
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const NavBarCategory()),
+      );
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      showSnackBAR(context, "SignUp Faied $result");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 50),
                 Image.asset("assets/images/Login-icon.png"),
                 const SizedBox(height: 20),
+
                 //Input field for email
                 TextField(
                   controller: emailController,
@@ -36,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
+
                 //Input field for password
                 TextField(
                   controller: passwordController,
@@ -58,11 +94,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: isPasswordHidden,
                 ),
                 const SizedBox(height: 20),
+
                 //For login button
-                SizedBox(
-                  width: double.infinity,
-                  child: MyButton(onTap: () {}, buttontext: "Login"),
-                ),
+                isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : SizedBox(
+                        width: double.infinity,
+                        child: MyButton(onTap: _login, buttontext: "Login"),
+                      ),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -99,4 +138,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
