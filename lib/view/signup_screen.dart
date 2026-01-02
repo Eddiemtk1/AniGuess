@@ -54,97 +54,99 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Column(
-            children: [
-              const SizedBox(height: 50),
-              Image.asset(
-                "assets/images/SignUp-icon.png",
-              ), //https://shorturl.at/EPRhs
-              const SizedBox(height: 20),
-
-              //Input field for name
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: "Name",
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              //Input field for email
-              TextField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  labelText: "Email",
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              //Input field for password
-              TextField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  labelText: "Password",
-                  border: const OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isPasswordHidden = !isPasswordHidden;
-                      });
-                    },
-                    icon: Icon(
-                      isPasswordHidden
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                    ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              children: [
+                const SizedBox(height: 50),
+                Image.asset(
+                  "assets/images/SignUp-icon.png",
+                ), //https://shorturl.at/EPRhs
+                const SizedBox(height: 20),
+          
+                //Input field for name
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: "Name",
+                    border: OutlineInputBorder(),
                   ),
                 ),
-                obscureText: isPasswordHidden,
-              ),
-              const SizedBox(height: 20),
-
-              //For signup button
-              isLoading
-                  ? const Center(child: CircularProgressIndicator(),
-                  )
-                  : SizedBox(
-                      width: double.infinity,
-                      child: MyButton(onTap: _signUp, buttontext: "SignUp"),
-                    ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const Text(
-                    "Already have an account?",
-                    style: TextStyle(fontSize: 18),
+                const SizedBox(height: 20),
+          
+                //Input field for email
+                TextField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    labelText: "Email",
+                    border: OutlineInputBorder(),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      "Signup here",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                        letterSpacing: -1,
+                ),
+                const SizedBox(height: 20),
+          
+                //Input field for password
+                TextField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    labelText: "Password",
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isPasswordHidden = !isPasswordHidden;
+                        });
+                      },
+                      icon: Icon(
+                        isPasswordHidden
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ],
+                  obscureText: isPasswordHidden,
+                ),
+                const SizedBox(height: 20),
+          
+                //For signup button
+                isLoading
+                    ? const Center(child: CircularProgressIndicator(),
+                    )
+                    : SizedBox(
+                        width: double.infinity,
+                        child: MyButton(onTap: _signUp, buttontext: "SignUp"),
+                      ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text(
+                      "Already have an account?",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Login here",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                          letterSpacing: -1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
