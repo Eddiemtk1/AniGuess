@@ -1,5 +1,4 @@
 import 'package:anime_quiz/view/quiz_category.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class NavBarCategory extends StatefulWidget {
@@ -15,7 +14,7 @@ class _NavBarCategoryState extends State<NavBarCategory> {
   final pages = [
     const QuizCategory(),
     const Scaffold(body: Center(child: Text("Leaderboard"))),
-    Scaffold(body: Center(child: Text("Leaderboard"))),
+    Scaffold(body: Center(child: Text("Profile"))),
   ];
   late int selectedIndex;
   @override
