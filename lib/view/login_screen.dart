@@ -45,7 +45,17 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         isLoading = false;
       });
-      showSnackBAR(context, "SignUp Faied $result");
+
+      String message = result;
+      if (result.contains("invalid-credential") || result.contains("user-not-found") || result.contains("wrong-password")){
+        message = "Incorrect email or password. Please try again.";
+      }else if (result.contains("invalid-email")){
+        message = "Please enter a valid email address";
+      }else if (result.contains("too-many-requests")){
+        message = "Way too many attempts. Chill out";
+      }
+
+      showSnackBAR(context, message);
     }
   }
 
