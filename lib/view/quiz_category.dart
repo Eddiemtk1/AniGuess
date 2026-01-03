@@ -1,3 +1,4 @@
+import 'package:anime_quiz/view/quiz_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _QuizCategoryState extends State<QuizCategory> {
     return SafeArea(
       bottom: false,
       child: Padding(
-        padding: const EdgeInsets.only(left: 15,right: 15,top: 30),
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 30),
         child: StreamBuilder(
           stream: mycollection.orderBy("level", descending: false).snapshots(),
           //Quiz categories now appear in ascending difficulty level
@@ -40,26 +41,36 @@ class _QuizCategoryState extends State<QuizCategory> {
               itemBuilder: (context, index) {
                 final DocumentSnapshot documentSnapshot =
                     snapshot.data!.docs[index];
-                    String docID = documentSnapshot.id;
-                    Color cardColor = Colors.blue;
+                String docID = documentSnapshot.id;
+                Color cardColor = Colors.blue;
 
-                    if (docID == "easy"){
-                      cardColor = Colors.green;
-                    }
-                    if (docID == "medium"){
-                      cardColor = Colors.yellow;
-                    }
-                    if (docID == "hard"){
-                      cardColor = Colors.red;
-                    }
+                if (docID == "easy") {
+                  cardColor = Colors.green;
+                }
+                if (docID == "medium") {
+                  cardColor = Colors.yellow;
+                }
+                if (docID == "hard") {
+                  cardColor = Colors.red;
+                }
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            QuizScreen(categoryName: documentSnapshot["title"]
+                            ),
+                      ),
+                    );
+                  },
                   child: Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    color: cardColor,//change to color:Colors.blue for return to normal
+                    color:
+                        cardColor, //change to color:Colors.blue for return to normal
                     child: Column(
                       children: [
                         ClipRRect(
@@ -73,8 +84,15 @@ class _QuizCategoryState extends State<QuizCategory> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(height: 8,),
-                        Text(documentSnapshot["title"], style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold, color: Colors.white),)
+                        SizedBox(height: 8),
+                        Text(
+                          documentSnapshot["title"],
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ),

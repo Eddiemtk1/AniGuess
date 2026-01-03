@@ -30,8 +30,9 @@ class _LoginScreenState extends State<LoginScreen> {
       password: passwordController.text,
     );
 
-    if (!mounted)
-      return; //If the screen is open, continue. If it's closed, stop.
+    if (!mounted){
+      return;  
+      }   //If the screen is open, continue. If it's closed, stop.
     if (result == "success") {
       setState(() {
         isLoading = false;
