@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:math';
+import 'package:anime_quiz/view/result_screen.dart';
 import 'package:anime_quiz/widgets/my_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -83,10 +86,10 @@ class _QuizScreenState extends State<QuizScreen> {
       });
     } else {
       await _updateUserScore();
-      //Navigator.pushReplacement(
-      //context,
-      //MaterialPageRoute(builder: (context) => ResultScreen()),
-      //);
+      Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => ResultScreen(score: score,totalQuestion: question.length,)),
+      );
     }
   }
 
@@ -101,7 +104,7 @@ class _QuizScreenState extends State<QuizScreen> {
             var snapshot = await transaction.get(userRef);
             if(!snapshot.exists) return;
             int existingScore = snapshot["score"] ?? 0;
-            transaction.update(userRef, {"score": existingScore});
+            transaction.update(userRef, {"score": existingScore + score});
           });
     } catch (e) {
       debugPrint("error update score $e");
@@ -119,7 +122,6 @@ class _QuizScreenState extends State<QuizScreen> {
       body: Padding(
         padding: EdgeInsets.all(15),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: 10),
             LinearProgressIndicator(
