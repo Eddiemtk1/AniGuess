@@ -59,7 +59,7 @@ class _QuizCategoryState extends State<QuizCategory> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            QuizScreen(categoryName: documentSnapshot["title"]
+                            QuizScreen(categoryName: documentSnapshot.id
                             ),
                       ),
                     );
