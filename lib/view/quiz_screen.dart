@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:anime_quiz/widgets/my_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -58,6 +59,52 @@ class _QuizScreenState extends State<QuizScreen> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  //Check the correct answer
+  void _checkAnswer(int index) {
+    setState(() {
+      hasAnswered = true;
+      selectedOption = index;
+      if (question[currentIndex]["correctIndex"] == index) {
+        score++;
+      }
+    });
+  }
+
+  //for next question
+  Future<void> _nextQuestion() async {
+    if (currentIndex < question.length - 1) {
+      setState(() {
+        currentIndex++;
+        hasAnswered = false;
+        selectedOption = null;
+      });
+    } else {
+      await _updateUserScore();
+      //Navigator.pushReplacement(
+      //context,
+      //MaterialPageRoute(builder: (context) => ResultScreen()),
+      //);
+    }
+  }
+
+  Future<void> _updateUserScore() async {
+    var user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    try {
+      var userRef = FirebaseFirestore.instance
+          .collection("userData")
+          .doc(user.uid);
+          await FirebaseFirestore.instance.runTransaction((transaction)async{
+            var snapshot = await transaction.get(userRef);
+            if(!snapshot.exists) return;
+            int existingScore = snapshot["score"] ?? 0;
+            transaction.update(userRef, {"score": existingScore});
+          });
+    } catch (e) {
+      debugPrint("error update score $e");
     }
   }
 
@@ -124,11 +171,12 @@ class _QuizScreenState extends State<QuizScreen> {
             //Conditionally render the next/finish button
             if (hasAnswered)
               MyButton(
-                onTap: () {},
+                onTap: _nextQuestion,
                 buttontext: currentIndex == question.length - 1
                     ? "Finish"
                     : "Next",
               ),
+            const SizedBox(height: 200),
           ],
         ),
       ),
@@ -136,7 +184,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Widget _buildOption(int index) {
-    bool isCorrect = question[currentIndex]["correctIndex"] == index + 1;
+    bool isCorrect = question[currentIndex]["correctIndex"] == index;
     bool isSelected = selectedOption == index;
     Color bgcolor = hasAnswered
         ? (isCorrect
@@ -149,7 +197,7 @@ class _QuizScreenState extends State<QuizScreen> {
         ? Colors.white
         : Colors.black;
     return InkWell(
-      //onTap: hasAnswered? null :()=>_checkAnswer(index)
+      onTap: hasAnswered? null :()=>_checkAnswer(index),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.8,
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 12),
