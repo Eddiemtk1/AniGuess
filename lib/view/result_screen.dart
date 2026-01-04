@@ -52,8 +52,9 @@ class ResultScreen extends StatelessWidget {
             children: [
               Stack(
                 children: [
+                  //from website
                   Lottie.network(
-                    "https://lottie.host/e799a4a9-ac7f-480a-b3a0-e37277e24eed/CNuv21M3D5.json",
+                    "https://lottie.host/6b194767-a85e-4fdb-8057-9d5bc8dfa55a/cqdWqd1vqR.json",
                     height: 200,
                     width: 300,
                     fit: BoxFit.cover,
