@@ -102,13 +102,16 @@ class ResultScreen extends StatelessWidget {
                       buttontext: "Start New Quiz",
                     ),
                   ),
+                  const SizedBox(width: 20),
+
                   Expanded(
                     child: MyButton(
                       onTap: () {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const NavBarCategory(initialIndex: 1,),
+                            builder: (context) =>
+                                const NavBarCategory(initialIndex: 1),
                           ),
                           (route) => false,
                         );
