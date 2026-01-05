@@ -18,7 +18,7 @@ class ProfileScreen extends State<ProfileScreen> {
         Future<void> fetchUserData() async{
             if(user == null) return;
             try{
-                DocumentSnapshot documentSnapshot = await Fir
+                DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance.collection("users").doc(user!.uid).get();
             }catch(e){
                 print(e.toString());
             }
