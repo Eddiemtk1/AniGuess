@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:anime_quiz/Services/authenticate_service.dart';
 import 'package:anime_quiz/view/login_screen.dart';
 import 'package:anime_quiz/widgets/my_button.dart';
@@ -24,11 +25,13 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() {
       isLoading = true;
     });
+    Uint8List? profileImageBytes;
     //CALL THE METHOD
     final result = await _authService.signUpUser(
       email: emailController.text,
       password: passwordController.text,
       name: nameController.text,
+      profileImage: profileImageBytes,
     );
 
     if (!mounted) return; //If the screen is open, continue. If it's closed, stop.

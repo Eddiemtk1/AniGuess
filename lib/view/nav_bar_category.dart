@@ -1,3 +1,4 @@
+import 'package:anime_quiz/view/profile_screen.dart';
 import 'package:anime_quiz/view/quiz_category.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class _NavBarCategoryState extends State<NavBarCategory> {
   final pages = [
     const QuizCategory(),
     const Scaffold(body: Center(child: Text("Leaderboard"))),
-    const ProfileScreen()
+    ProfileScreen()
   ];
   late int selectedIndex;
   @override
