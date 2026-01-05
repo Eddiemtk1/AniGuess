@@ -14,7 +14,7 @@ class _NavBarCategoryState extends State<NavBarCategory> {
   final pages = [
     const QuizCategory(),
     const Scaffold(body: Center(child: Text("Leaderboard"))),
-    Scaffold(body: Center(child: Text("Profile"))),
+    const ProfileScreen()
   ];
   late int selectedIndex;
   @override
