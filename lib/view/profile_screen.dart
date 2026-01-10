@@ -45,7 +45,8 @@ class _ProfileScreen extends State<ProfileScreen> {
         });
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
+      if (!mounted) return;
       showSnackBAR(context, "Error getting user data:$e");
       setState(() {
         isLoading = false;
@@ -62,6 +63,7 @@ class _ProfileScreen extends State<ProfileScreen> {
           .collection("userData")
           .doc(user!.uid)
           .set({"photoBase64": base64Image}, SetOptions(merge: true));
+          if (!mounted) return;
       setState(() {
         profileImageBytes = imageBytes;
       });
@@ -88,6 +90,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   //For logging out
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
+    if (!mounted) return;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => LoginScreen()),

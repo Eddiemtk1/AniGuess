@@ -1,10 +1,11 @@
+import 'package:anime_quiz/view/leaderboard.dart';
 import 'package:anime_quiz/view/profile_screen.dart';
 import 'package:anime_quiz/view/quiz_category.dart';
 import 'package:flutter/material.dart';
 
 class NavBarCategory extends StatefulWidget {
   final int initialIndex;
-  const NavBarCategory({super.key, this.initialIndex = 0});
+  const NavBarCategory({super.key, this.initialIndex = 1});
 
   @override
   State<NavBarCategory> createState() => _NavBarCategoryState();
@@ -14,8 +15,8 @@ class _NavBarCategoryState extends State<NavBarCategory> {
   final PageStorageBucket bucket = PageStorageBucket();
   final pages = [
     const QuizCategory(),
-    const Scaffold(body: Center(child: Text("Leaderboard"))),
-    ProfileScreen()
+    const Leaderboard(),
+    const ProfileScreen()
   ];
   late int selectedIndex;
   @override

@@ -27,7 +27,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Future<void> _fetchQuestions() async {
-    print("LOOKING FOR DOCUMENT NAMED: ${widget.categoryName}");
+    debugPrint("LOOKING FOR DOCUMENT NAMED: ${widget.categoryName}");
     try {
       var collectionSnapshot = await FirebaseFirestore.instance
           .collection("quizzes")
@@ -57,7 +57,7 @@ class _QuizScreenState extends State<QuizScreen> {
         isLoading = false;
       });
     } catch (e) {
-      print("Error getting questions");
+      debugPrint("Error getting questions");
     } finally {
       setState(() {
         isLoading = false;

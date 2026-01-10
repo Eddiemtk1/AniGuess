@@ -31,7 +31,7 @@ class ResultScreen extends StatelessWidget {
         transaction.update(userRef, {"score": existingScore + score});
       });
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 
