@@ -12,6 +12,11 @@ class Leaderboard extends StatelessWidget {
         .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
   }
 
+  String getShortName(String name){
+    return name.length > 7 ? name.substring(0, 7) : name;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,62 +33,68 @@ class Leaderboard extends StatelessWidget {
           }
           final topThree = users.take(3).toList();
           final remainingUser = users.skip(3).toList();
+
           return Column(
             children: [
               //The Big 3
-              Stack(
-                children: [
-                  Image.asset(
-                    'assets/images/Leaderboard.jpg',
-                    width: double.maxFinite,
-                    height: 450,
-                    fit: BoxFit.cover,
-                  ),
-                  Positioned(
-                    child: Text(
-                      'Leaderboard',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
+              const SizedBox(height: 90),
+              SizedBox(
+                height: 250,
+                child: Stack(
+                  children: [
+                    Image.asset(
+                      'assets/images/podium2.jpg',
+                      width: double.infinity,
+                      height: 250,
+                      fit: BoxFit.cover,
+                    ),
+                    Positioned(
+                      child: Text(
+                        'Leaderboard',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                  if (topThree.isNotEmpty)
-                    Positioned(
-                      top: 175,
-                      right: 50,
-                      left: 50,
-                      child: _buildTopUser(topThree[0], 1, context),
-                    ),
-                  if (topThree.length >= 2)
-                    Positioned(
-                      top: 175,
-                      right: 50,
-                      left: 50,
-                      child: _buildTopUser(topThree[0], 1, context),
-                    ),
-                  if (topThree.length >= 3)
-                    Positioned(
-                      top: 175,
-                      right: 50,
-                      left: 50,
-                      child: _buildTopUser(topThree[0], 1, context),
-                    ),
-
-                  //Rest of the users
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: remainingUser.length,
-                      padding: EdgeInsets.zero,
-                      itemBuilder: (context, index) {
-                        final user = remainingUser[index];
-                        final rank = index + 4;
-                        return _buildRegularUser(user, rank, context);
-                      },
-                    ),
-                  ),
-                ],
+                    if (topThree.isNotEmpty) //1st place
+                      Positioned(
+                        top: 35,
+                        right: 0,
+                        left: 0,
+                        child: _buildTopUser(topThree[0], 1, context),
+                      ),
+                    if (topThree.length >= 2) //2nd place
+                      Positioned(
+                        top: 85,
+                        left: 30,
+                        child: _buildTopUser(
+                          topThree[1],
+                          2,
+                          context,
+                        ), //3rd place
+                      ),
+                    if (topThree.length >= 3)
+                      Positioned(
+                        top: 100,
+                        right: 30,
+                        child: _buildTopUser(topThree[2], 3, context),
+                      ),
+                  ],
+                ),
+              ),
+              //Rest of the users
+              Expanded(
+                child: ListView.builder(
+                  itemCount: remainingUser.length,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    final user = remainingUser[index];
+                    final rank = index + 4;
+                    return _buildRegularUser(user, rank, context);
+                  },
+                ),
               ),
             ],
           );
@@ -102,7 +113,7 @@ class Leaderboard extends StatelessWidget {
       child: Column(
         children: [
           CircleAvatar(
-            radius: rank == 1 ? 40 : 30,
+            radius: rank == 1 ? 30 : 30,
             backgroundImage: user['photoBase64'] != null
                 ? MemoryImage(base64Decode(user['photoBase64']))
                 : null,
@@ -111,14 +122,27 @@ class Leaderboard extends StatelessWidget {
                 : null,
           ),
           SizedBox(height: 10),
-          //Name
-          Text(
+          //User name
+          Center(
+            child: rank == 1
+          ? Text(
             user['name'],
+            maxLines: 1,
             style: TextStyle(
-              fontSize: rank == 1 ? 22 : 18,
-              fontWeight: FontWeight.w400,
+              fontSize: rank == 1 ? 18 : 18,
+              fontWeight: FontWeight.bold,
             ),
-          ),
+          )
+          : Text(
+            getShortName(
+            user['name'],),
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: rank == 1 ? 18 : 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),),
+
           const SizedBox(height: 5),
           Container(
             height: 30,
@@ -134,7 +158,7 @@ class Leaderboard extends StatelessWidget {
                 Text('👍', style: TextStyle(fontSize: 19)),
                 SizedBox(width: 5),
                 Text(
-                  '${user['score']}',
+                  '${user['score']*7}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -196,7 +220,7 @@ Widget _buildRegularUser(
               Text('👍', style: TextStyle(fontSize: 19)),
               SizedBox(width: 5),
               Text(
-                '${user['score']}',
+                '${user['score']*7}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
