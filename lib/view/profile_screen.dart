@@ -77,6 +77,8 @@ class _ProfileScreen extends State<ProfileScreen> {
   Future<void> pickImageFromGallery() async {
     final returnImage = await ImagePicker().pickImage(
       source: ImageSource.gallery,
+      imageQuality: 20,
+      maxWidth: 200,
     );
     if (returnImage == null) return;
     //Convert image to bytes

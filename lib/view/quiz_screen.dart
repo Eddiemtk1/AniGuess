@@ -166,7 +166,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 itemBuilder: (context, index) {
                   return _buildOption(index);
                 },
-                separatorBuilder: (_, __) => SizedBox(height: 15),
+                separatorBuilder: (_, _) => SizedBox(height: 15),
                 itemCount: question[currentIndex]["options"].length,
               ),
             ),
