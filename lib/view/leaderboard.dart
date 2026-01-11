@@ -213,6 +213,8 @@ Widget _buildRegularUser(
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
 
+        Spacer(),
+
         //total points
         Container(
           height: 30,

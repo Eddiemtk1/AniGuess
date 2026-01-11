@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class NavBarCategory extends StatefulWidget {
   final int initialIndex;
-  const NavBarCategory({super.key, this.initialIndex = 1});
+  const NavBarCategory({super.key, this.initialIndex = 0});
 
   @override
   State<NavBarCategory> createState() => _NavBarCategoryState();
