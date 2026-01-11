@@ -36,39 +36,45 @@ class Leaderboard extends StatelessWidget {
 
           return Column(
             children: [
-              //The Big 3
-              const SizedBox(height: 90),
-              SizedBox(
-                height: 250,
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      'assets/images/podium2.jpg',
-                      width: double.infinity,
-                      height: 250,
-                      fit: BoxFit.cover,
-                    ),
-                    Positioned(
+              //Leaderboard
+              const SizedBox(height: 50),
+              const Center(
                       child: Text(
                         'Leaderboard',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 35,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                         ),
                       ),
                     ),
+                    const SizedBox(height: 5),
+
+              //Podium Big 3      
+              SizedBox(
+                height: 290,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: AlignmentGeometry.bottomCenter,
+                    child: Image.asset(
+                      'assets/images/podium4.jpg',
+                      width: double.infinity,
+                      fit: BoxFit.fitWidth,
+                    ),
+                    ),
+
                     if (topThree.isNotEmpty) //1st place
                       Positioned(
-                        top: 35,
+                        top: 30,
                         right: 0,
-                        left: 0,
+                        left: 15,
                         child: _buildTopUser(topThree[0], 1, context),
                       ),
                     if (topThree.length >= 2) //2nd place
                       Positioned(
-                        top: 85,
-                        left: 30,
+                        top: 65,
+                        left: 40,
                         child: _buildTopUser(
                           topThree[1],
                           2,
@@ -77,13 +83,15 @@ class Leaderboard extends StatelessWidget {
                       ),
                     if (topThree.length >= 3)
                       Positioned(
-                        top: 100,
+                        top: 85,
                         right: 30,
                         child: _buildTopUser(topThree[2], 3, context),
                       ),
                   ],
                 ),
               ),
+
+
               //Rest of the users
               Expanded(
                 child: ListView.builder(
@@ -113,7 +121,7 @@ class Leaderboard extends StatelessWidget {
       child: Column(
         children: [
           CircleAvatar(
-            radius: rank == 1 ? 30 : 30,
+            radius: rank == 1 ? 25 : 30,
             backgroundImage: user['photoBase64'] != null
                 ? MemoryImage(base64Decode(user['photoBase64']))
                 : null,
